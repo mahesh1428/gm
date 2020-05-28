@@ -1,0 +1,274 @@
+1.1
+Write a Python Program to implement your own myreduce() function which works exactly like
+Python's built-in function reduce()
+
+ans:def addition(x,y):
+    return x+y
+
+def division(x,y):
+    return x/y
+
+def greaterThan(x, y):
+    return x > y
+
+def myreduce(f = None, array=None):
+    '''custom reduce function'''
+    # keep the first element of array in the accumulator
+    accumulator = array[0]
+    # iterate over the array to accumulate the result in accumulator
+    for i in array[1:]:
+        accumulator = f(accumulator, i)
+    # return the accumulated result
+    return accumulator
+
+# test array 
+arr = [1,2,3]
+add_result = myreduce(f = addition, array=arr)
+print(f"addition accumulation result \n= {add_result}", "\n")
+
+div_result = myreduce(f = division, array=arr)
+print(f"result of division \n= {div_result}", "\n")
+
+greater_than_result = myreduce(f = greaterThan, array=arr)
+print(f"result of comparision operator '>' \n= {greater_than_result}", "\n")
+
+using_lambda_function = myreduce( f = lambda x, y: x**y, array=arr)
+print(f"result of lambda function to get the exponential value \n= {using_lambda_function}", "\n")
+o/p:addition accumulation result 
+= 6 
+
+result of division 
+= 0.16666666666666666 
+
+result of comparision operator '>' 
+= False 
+
+result of lambda function to get the exponential value 
+= 1 
+
+from functools import reduce
+
+array = [1,2,3]
+
+testingReduce = TestCustomFunctions(iterable = array,
+                                    testFunctions = [addition, division, greaterThan],
+                                    myCustomFunc = myreduce,
+                                    inBuiltFunc = reduce)
+print("verifying my custom reduce function w.r.t. in build reduce function...\n")
+testingReduce.test()
+o/p:verifying my custom reduce function w.r.t. in build reduce function...
+
+result for <function addition at 0x7fc4284e96a8>
+----------------------------------------
+result for <function division at 0x7fc4284e90d0>
+----------------------------------------
+result for <function greaterThan at 0x7fc4284e9488>
+----------------------------------------
+ALL TEST CASES PASSED !!
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+1.2
+Write a Python program to implement your own myfilter() function which works exactly like
+Python's built-in function filter()
+
+ans:def is_odd_no(x):
+    return x%2!=0
+
+def is_even_no(x):
+    return x%2==0
+
+def is_vowel(x):
+    vowel = ['a', 'e', 'i', 'o', 'u']
+    if x in vowel:
+        return True
+    return False
+
+def myFilter(f = None, array = None):
+    '''custom filter function'''
+    # init empty array for results
+    results = []
+
+    # iterate over input array for filtering 
+    for i in array:
+        if f(i):
+            results.append(i)
+    return results
+
+arr = [1,2,3,4,5,6,7,8,9,0]
+odd_result = myFilter(f = is_odd_no, array = arr)
+print(f"filtering odd nos\n={odd_result}\n")
+
+even_result = myFilter(f = is_even_no, array = arr)
+print(f"filtering even result\n={even_result}\n")
+
+alphaArray = list("hello")
+alpha_result = myFilter(f = is_vowel, array = alphaArray)
+print(f"filtering vowels result\n={alpha_result}\n")
+
+o/p:filtering odd nos
+=[1, 3, 5, 7, 9]
+
+filtering even result
+=[2, 4, 6, 8, 0]
+
+filtering vowels result
+=['e', 'o']
+
+# veriying results of my custom filter wrt to inbuild filter function
+arr = [1,2,3,4,5,6,7,8,9,0]
+testingFilter = TestCustomFunctions(iterable = arr, 
+                                    testFunctions = [is_odd_no, is_even_no],
+                                    myCustomFunc = myFilter,
+                                    inBuiltFunc = filter)
+testingFilter.test()
+
+o/p:result for <function is_odd_no at 0x7fc4284e9ea0>
+----------------------------------------
+result for <function is_even_no at 0x7fc4284e9c80>
+----------------------------------------
+ALL TEST CASES PASSED !!
+
+
+2. Implement List comprehensions to produce the following lists. Write List comprehensions to produce the following Lists
+['A', 'C', 'A', 'D', 'G', 'I', ’L’, ‘ D’]
+
+['x', 'xx', 'xxx', 'xxxx', 'y', 'yy', 'yyy', 'yyyy', 'z', 'zz', 'zzz', 'zzzz']
+
+['x', 'y', 'z', 'xx', 'yy', 'zz', 'xxx', 'yyy', 'zzz', 'xxxx', 'yyyy', 'zzzz']
+
+[[2], [3], [4], [3], [4], [5], [4], [5], [6]]
+
+[[2, 3, 4, 5], [3, 4, 5, 6], [4, 5, 6, 7], [5, 6, 7, 8]]
+
+[(1, 1), (2, 1), (3, 1), (1, 2), (2, 2), (3, 2), (1, 3), (2, 3), (3, 3)]
+ans:
+IN:# 1st sequence
+str1 = 'ACADGILD'
+[i for i in str1]
+O/P:['A', 'C', 'A', 'D', 'G', 'I', 'L', 'D']
+
+# 2nd sequence
+lst = list("xyz")
+[letter*i for letter in lst for i in range(1,5) ]
+O/P:['x', 'xx', 'xxx', 'xxxx', 'y', 'yy', 'yyy', 'yyyy', 'z', 'zz', 'zzz', 'zzzz']
+
+# 3rd sequence 
+lst = list("xyz")
+
+[letter*i for i in range(1,5) for letter in lst]
+O/P:['x', 'y', 'z', 'xx', 'yy', 'zz', 'xxx', 'yyy', 'zzz', 'xxxx', 'yyyy', 'zzzz']
+
+# 4th sequence
+[[i+k] for i in range(2, 5) for k in range(3)]
+O/P:[[2], [3], [4], [3], [4], [5], [4], [5], [6]]
+
+# 5th sequence
+[[i+k for i in range(2,6)] for k in range(4)]
+O/P:[[2, 3, 4, 5], [3, 4, 5, 6], [4, 5, 6, 7], [5, 6, 7, 8]]
+
+# 6th sequence
+lst = list(range(1,4))
+[(k ,i) for i in range(1,4) for k in range(1,4)]
+O/P:[(1, 1), (2, 1), (3, 1), (1, 2), (2, 2), (3, 2), (1, 3), (2, 3), (3, 3)]
+-----------------------------------------------------------------------------------------------------------------------------
+3.Implement a function longestWord() that takes a list of words and returns the longest one.
+ANS:def longestWord(array=None):
+    max_len_word = "" # empty string to save result
+    for word in array:
+        if len(word) > len(max_len_word):
+            max_len_word = word
+    return max_len_word
+
+arr = ["mahesh" "saitejakumar", "lokesh" ]
+result = longestWord(array= arr)
+print(result)
+o/p:saitejakumar
+--------------------------------------------------------------------------------------------------------------------------------
+Task 2:
+1.1
+Write a Python Program(with class concepts) to find the area of the triangle using the below
+formula.
+area = (s*(s-a)*(s-b)*(s-c)) ** 0.5
+Function to take the length of the sides of triangle from user should be defined in the parent
+class and function to calculate the area should be defined in subclass.
+ans:class Dimensions:
+    '''Class to define sides of a triangle'''
+    def __init__(self, sideA, sideB, sideC):
+        self.a = sideA
+        self.b = sideB
+        self.c = sideC
+
+    def semiperimeter(self):
+        # calculate semi perimeter
+        s = (self.a + self.b + self.c)/2
+        return s
+
+class Area(Dimensions):
+    '''
+    Class to calculate the area of triangle
+    based on Heron's Formula
+    who's side are defined in Dimensions class
+    '''
+    def __init__(self, *args):
+         super().__init__(*args)
+
+    def calculate_area(self):
+        # get the semi perimeter from Dimension parent class
+        s = super().semiperimeter()
+        # calculate area
+        area = (s*(s-self.a)*(s-self.b)*(s-self.c)) ** 0.5
+        print(f"Area of the triangle = {area} unit\u00b2")
+        return area
+
+area = Area(3,4,5)
+_ = area.calculate_area()
+o/p:Area of the triangle = 6.0 unit²
+------------------------------------------------------------------------------------------------------------
+1.2
+Write a function filter_long_words() that takes a list of words and an integer n and returns the list
+of words that are longer than n.
+ans:def filter_long_words(N=None, array = None):
+    results = [] # init empty array for results
+    for i in array:
+        if len(i) > N:
+            results.append(i)
+    return results
+
+arr = ['hell-o-world', 'life', 'is', 'beautiful']
+n = 5
+result = filter_long_words(N = n, array = arr)
+print(f"longest words are = \n{result}")
+o/p:longest words are = 
+['hell-o-world', 'beautiful']
+-------------------------------------------------------------------------------------------------------------
+2.1
+Write a Python program using function concept that maps list of words into a list of integers
+representing the lengths of the corresponding words.
+Hint: If a list [ ab,cde,erty] is passed on to the python function output should come as [2,3,4]
+Here 2,3 and 4 are the lengths of the words in the list.
+ans:def get_length_of_words(array=None):
+    return [len(word) for word in array]
+
+arr = [ "ab", "cde", "erty"]
+result = get_length_of_words(arr)
+print(f"output = {result}\n")
+o/p:output = [2, 3, 4]
+------------------------------------------------------------------------------------------------------------
+2.2
+Write a Python function which takes a character (i.e. a string of length 1) and returns True if it is
+a vowel, False otherwise.
+ans:def is_vowel(x):
+    vowel = ['a', 'e', 'i', 'o', 'u']
+    if x in vowel:
+        return True
+    return False
+
+vowel_check = is_vowel("a")
+print(vowel_check)
+
+vowel_check = is_vowel("m")
+print(vowel_check)
+o/p:
+True
+False
